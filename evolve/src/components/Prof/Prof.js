@@ -1,11 +1,24 @@
 import { useEffect, useState } from "react"
+import { Button } from "@material-ui/core";
 import { useParams } from "react-router-dom"
-import { fetchProfDoc } from '../../backend/firebase.utils'
+import { fetchProfDoc, signProfOut } from '../../backend/firebase.utils'
 
 export function Prof() {
     const { uid } = useParams();
     const [data, setData] = useState({})
     const token = window.localStorage.getItem("token");
+
+    const signOut = () => {
+        signProfOut(uid)
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((err) => {
+                alert(err)
+            })
+        window.location.href = '/signin'
+
+    }
 
     useEffect(() => {
         fetchProfDoc(uid, token)
@@ -20,7 +33,7 @@ export function Prof() {
     }, [uid, token])
 
     return <h1>
-        {data}
         this is the professor page
+        <Button onClick={() => signOut()} >Sign Out</Button>
     </h1>
 }

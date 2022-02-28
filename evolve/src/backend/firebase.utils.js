@@ -61,8 +61,8 @@ export const fetchProfDoc = async (uid, token) => {
 export const fetchStudentDoc = async (uid, token) => {
     if (!uid || !token) throw new Error('WHO THE FUCK ARE YOU, unauthenticated');
 
-    const profRef = firestore.doc(`users/students/all/${uid}`);//does this user exist in the DB? 
-    const studentSnapShot = await profRef.get()
+    const studentRef = firestore.doc(`users/students/all/${uid}`);//does this user exist in the DB? 
+    const studentSnapShot = await studentRef.get()
 
     if (!studentSnapShot.exists) {
         throw new Error('No such student id, contact your supervisors')
@@ -73,6 +73,36 @@ export const fetchStudentDoc = async (uid, token) => {
         throw new Error('WHO THE FUCK ARE YOU, unauthenticated')
     }
 
+    return data;
+}
+
+export const signStudentOut = async (uid) => {
+    if (!uid) throw new Error('WHO THE FUCK ARE YOU, unauthenticated');
+
+    const studentRef = firestore.doc(`users/students/all/${uid}`);//does this user exist in the DB? 
+    const studentSnapShot = await studentRef.get()
+
+    if (!studentSnapShot.exists) {
+        throw new Error('No such student id, contact your supervisors')
+    }
+
+    const data = studentSnapShot.data();
+    await studentRef.set({ token: '' }, { merge: true })
+    return data;
+}
+
+export const signProfOut = async (uid) => {
+    if (!uid) throw new Error('WHO THE FUCK ARE YOU, unauthenticated');
+
+    const profRef = firestore.doc(`users/profs/all/${uid}`);//does this user exist in the DB? 
+    const profSnapShot = await profRef.get()
+
+    if (!profSnapShot.exists) {
+        throw new Error('No such student id, contact your supervisors')
+    }
+
+    const data = profSnapShot.data();
+    await profRef.set({ token: '' }, { merge: true })
     return data;
 }
 
