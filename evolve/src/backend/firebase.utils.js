@@ -3,27 +3,80 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import "firebase/compat/auth";
 import config from './config';
+import { v4 as uuidv4 } from 'uuid';
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const { firebaseConfig } = config
 
 export const fetchUserDoc = async (userAuth) => {
-    console.log(userAuth)
     if (!userAuth) return;
-    // const userRef = firestore.doc('users/random12') //returns a ref to the doc not the obj itself which technically doesnt exsit
-    const userRef = firestore.doc(`users/${userAuth.uid}`);//is this user exist in the DB? 
-    const snapShot = await userRef.get(); //gets me the obj 'simply represents the data'
+
+    const profRef = firestore.doc(`users/profs/all/${userAuth.uid}`);//does this user exist in the DB? 
+    const studentRef = firestore.doc(`users/students/all/${userAuth.uid}`);
+
+    const profSnapShot = await profRef.get()
+    const studentSnapShot = await studentRef.get()
+    const snapShot = profSnapShot.exists ? profSnapShot : studentSnapShot;
+
     if (!snapShot.exists) {
-        return 'no such id, contact your supervisors'
+        throw new Error('No such id, contact your supervisors')
     }
-    return snapShot.data();
+
+    const data = snapShot.data();
+    if (data.pass !== userAuth.password) {
+        throw new Error('Password is incorrect, please try again')
+    }
+
+    if (data?.token) {
+        throw new Error('User is already signed in')
+    }
+
+    const isStudent = studentSnapShot?.exists
+
+    const token = uuidv4();
+    window.localStorage.setItem("token", token);
+    isStudent ? await studentRef.set({ token }, { merge: true }) : await profRef.set({ token }, { merge: true })
+
+    return { data, isStudent };
 }
 
-// Initialize Firebase
+export const fetchProfDoc = async (uid, token) => {
+    if (!uid || !token) throw new Error('WHO THE FUCK ARE YOU, unauthenticated');
+
+    const profRef = firestore.doc(`users/profs/all/${uid}`);//does this user exist in the DB? 
+    const profSnapShot = await profRef.get()
+
+    if (!profSnapShot.exists) {
+        throw new Error('No such prof id, contact your supervisors')
+    }
+
+    const data = profSnapShot.data();
+
+    if (data.token !== token) {
+        throw new Error('WHO THE FUCK ARE YOU, unauthenticated')
+    }
+
+    return data;
+}
+
+export const fetchStudentDoc = async (uid, token) => {
+    if (!uid || !token) throw new Error('WHO THE FUCK ARE YOU, unauthenticated');
+
+    const profRef = firestore.doc(`users/students/all/${uid}`);//does this user exist in the DB? 
+    const studentSnapShot = await profRef.get()
+
+    if (!studentSnapShot.exists) {
+        throw new Error('No such student id, contact your supervisors')
+    }
+
+    const data = studentSnapShot.data();
+    if (data.token !== token) {
+        throw new Error('WHO THE FUCK ARE YOU, unauthenticated')
+    }
+
+    return data;
+}
+
+
 firebase.initializeApp(firebaseConfig);
 
 export const auth = firebase.auth();

@@ -69,26 +69,24 @@ export function SignIn(props) {
         e.preventDefault();
         let name = e.target.name;
         name === 'email' ? setEmail(e.target.value) : setPassword(e.target.value);
-        console.log(email, password);
     };
 
     let handleSubmit = (e) => {
         e.preventDefault();
         const userAuth = { uid: email, password }
-        fetchUserDoc(userAuth).then((res) => {
-            setEmail('');
-            setPassword('');
-            console.log(res);
-        })
+        fetchUserDoc(userAuth)
+            .then((data) => {
+                setEmail('');
+                setPassword('')
+                window.location.href = data?.isStudent ? `/student/${data.data.id}` : `/prof/${data.data.id}`;
+            })
             .catch((err) => {
-                console.log(err);
                 alert(err.message);
             });
     };
 
     return (
         <Grid container component='main' className={classes.root}>
-            dknsdknwkdwnkdwden
             <CssBaseline />
             <Grid item xs={false} sm={4} md={7} className={classes.image} />
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>

@@ -1,6 +1,8 @@
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { SignIn } from './components/SignIn/SignIn'
+import { Student } from './components/Student/Student'
+import { Prof } from './components/Prof/Prof'
 
 function App() {
   return (
@@ -9,6 +11,12 @@ function App() {
         <Switch>
           <Route path="/signin">
             <SignIn />
+          </Route>
+          <Route path="/student/:uid">
+            <Student />
+          </Route>
+          <Route path="/prof/:uid">
+            <Prof />
           </Route>
         </Switch>
       </Router>
