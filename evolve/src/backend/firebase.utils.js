@@ -86,9 +86,7 @@ export const signStudentOut = async (uid) => {
         throw new Error('No such student id, contact your supervisors')
     }
 
-    const data = studentSnapShot.data();
     await studentRef.set({ token: '' }, { merge: true })
-    return data;
 }
 
 export const signProfOut = async (uid) => {
@@ -100,10 +98,7 @@ export const signProfOut = async (uid) => {
     if (!profSnapShot.exists) {
         throw new Error('No such student id, contact your supervisors')
     }
-
-    const data = profSnapShot.data();
     await profRef.set({ token: '' }, { merge: true })
-    return data;
 }
 
 

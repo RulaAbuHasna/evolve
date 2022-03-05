@@ -12,10 +12,10 @@ function App() {
           <Route path="/signin">
             <SignIn />
           </Route>
-          <Route path="/student/:uid">
+          <Route path="/students/:uid">
             <Student />
           </Route>
-          <Route path="/prof/:uid">
+          <Route path="/profs/:uid">
             <Prof />
           </Route>
         </Switch>

@@ -10,13 +10,12 @@ export function Prof() {
 
     const signOut = () => {
         signProfOut(uid)
-            .then((res) => {
-                console.log(res)
+            .then(() => {
+                window.location.href = '/signin'
             })
             .catch((err) => {
                 alert(err)
             })
-        window.location.href = '/signin'
 
     }
 
@@ -26,7 +25,6 @@ export function Prof() {
                 setData(res)
             })
             .catch((err) => {
-                console.log(err)
                 alert(err)
                 window.location.href = '/signin'
             })
