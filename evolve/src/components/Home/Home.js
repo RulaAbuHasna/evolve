@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Header } from "../Header/Header";
+import { Sidebar } from '../Sidebar/Sidebar'
 import { fetchProfDoc, fetchStudentDoc } from '../../backend/firebase.utils'
 
 export function HomePage({ isCurrentUser = false, isStudent = false }) {
@@ -30,6 +31,8 @@ export function HomePage({ isCurrentUser = false, isStudent = false }) {
 
     return <div>
         <Header isUser={isUser} isStudent={isStudent} uid={uid} />
-        this is the home page
+        <div className="flex flex-row">
+            <Sidebar />
+        </div>
     </div>
 }
