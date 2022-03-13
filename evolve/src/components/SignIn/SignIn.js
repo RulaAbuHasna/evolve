@@ -20,7 +20,7 @@ export function SignIn() {
             .then((data) => {
                 setUid('');
                 setPassword('')
-                window.location.href = data?.isStudent ? `/students/${data.data.id}` : `/profs/${data.data.id}`;
+                window.location.href = data?.isStudent ? `/student/${data.data.id}` : `/prof/${data.data.id}`;
             })
             .catch((err) => {
                 alert(err.message);

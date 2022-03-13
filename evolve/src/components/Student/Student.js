@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { fetchStudentDoc } from '../../backend/firebase.utils'
+import { Footer } from "../Footer/Footer";
 import { Header } from '../Header/Header'
 
 export function Student() {
@@ -24,6 +25,7 @@ export function Student() {
     return <div>
         <Header isUser={isUser} isStudent={true} uid={uid} />
         this is the student profile page
+        <Footer />
     </div>
 
 
