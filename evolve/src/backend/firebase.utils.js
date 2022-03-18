@@ -118,6 +118,13 @@ export const getAllColleges = async () => {
     return CollegesQuerySnapShot
 }
 
+export const getCollegeProfs = async (uid) => {
+    if (!uid) throw Error('No id provided')
+    const ProfsRef = firestore.collection(`colleges/${uid}/profs`);
+    const ProfsQuerySnapShot = await ProfsRef.get()
+
+    return ProfsQuerySnapShot
+}
 
 firebase.initializeApp(firebaseConfig);
 

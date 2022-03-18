@@ -6,6 +6,7 @@ import { Prof } from './components/Prof/Prof'
 import { HomePage } from './components/Home/Home';
 import { Profs } from './components/Profs/Profs';
 import { Colleges } from './components/Collages/Colleges';
+import { College } from './components/College/College';
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
             <Prof />
           </Route>
           <Route exact path="/student/:uid/home" >
-            <HomePage isStudent={true} />
+            <HomePage isStudent={true} isCurrentUser={true} />
           </Route>
           <Route exact path="/prof/:uid/home" >
             <HomePage isCurrentUser={true} />
@@ -34,18 +35,27 @@ function App() {
             <Profs />
           </Route>
           <Route exact path="/student/:uid/profs">
-            <Profs />
+            <Profs isStudent={true} />
           </Route>
           <Route exact path="/profs">
             <Profs />
           </Route>
-          <Route exac path="/prof/:uid/colleges">
-            <Colleges />
-          </Route>
           <Route exact path="/student/:uid/colleges">
-            <Colleges />
+            <Colleges isStudent={true} />
           </Route>
           <Route exact path="/colleges">
+            <Colleges />
+          </Route>
+          <Route exact path="/student/:uid/colleges/:colid">
+            <College isStudent={true} />
+          </Route>
+          <Route exact path="/prof/:uid/colleges/:colid">
+            <College />
+          </Route>
+          <Route exact path="/colleges/:colid">
+            <College />
+          </Route>
+          <Route exac path="/prof/:uid/colleges">
             <Colleges />
           </Route>
         </Switch>

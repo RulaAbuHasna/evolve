@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Header } from "../Header/Header";
-import { fetchProfDoc, fetchStudentDoc, getAllProfs } from '../../backend/firebase.utils'
 import { Footer } from "../Footer/Footer";
+import { Header } from "../Header/Header";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { fetchProfDoc, fetchStudentDoc, getCollegeProfs } from '../../backend/firebase.utils'
 import { ProfCard } from "../shared/ProfCard";
-import { Input } from "@material-ui/core";
+import { Input } from '@material-ui/core';
 
-export function Profs({ isCurrentUser = false, isStudent = false }) {
-    const { uid } = useParams()
+export function College({ isCurrentUser = false, isStudent = false }) {
+    const { uid, colid } = useParams()
     const [profs, setProfs] = useState([])
     const [isUser, setIsUser] = useState(isCurrentUser)
     const token = window.localStorage.getItem("token");
@@ -16,7 +16,7 @@ export function Profs({ isCurrentUser = false, isStudent = false }) {
         if (uid) {
             isStudent ?
                 fetchStudentDoc(uid, token)
-                    .then((res) => {
+                    .then(() => {
                         setIsUser(true)
                     })
                     .catch((err) => alert(err))
@@ -27,7 +27,7 @@ export function Profs({ isCurrentUser = false, isStudent = false }) {
                     }).catch((err) => alert(err))
         }
 
-        getAllProfs()
+        getCollegeProfs(colid)
             .then((res) => {
                 setProfs(res?.docs)
             })
@@ -35,7 +35,7 @@ export function Profs({ isCurrentUser = false, isStudent = false }) {
                 alert(err)
             })
 
-    }, [uid, isStudent, token])
+    }, [uid, isStudent, token, colid])
 
     return <div>
         <Header isUser={isUser} uid={uid} isStudent={isStudent} />
@@ -44,8 +44,8 @@ export function Profs({ isCurrentUser = false, isStudent = false }) {
                 <Input placeholder="Search" value={''} onChange={(e) => console.log('')} type='text' fullWidth />
             </div>
             <div className="mt-6">
-                {profs?.map((prof, idx) => {
-                    const profData = prof?.data();
+                {profs.map((prof, idx) => {
+                    const profData = prof?.data()
                     return <ProfCard key={idx} profData={profData} isUser={isUser} uid={uid} isStudent={isStudent} />
                 })}
             </div>
