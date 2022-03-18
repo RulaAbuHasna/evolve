@@ -3,7 +3,7 @@ import { signProfOut, signStudentOut } from '../../backend/firebase.utils'
 export function Header({ isUser = false, isStudent, uid }) {
     const signOut = async () => {
         isStudent ? await signStudentOut(uid) : await signProfOut(uid)
-        window.location.href = '/signin'
+        window.location.href = '/'
     }
 
     const rediretToProfile = () => {
@@ -23,7 +23,7 @@ export function Header({ isUser = false, isStudent, uid }) {
         <ul className="flex flex-row flex-3 h-full">
             <button className="hover:bg-red-500 p-4 rounded" onClick={rediretToHome}>Home</button>
             <button className="hover:bg-red-500 p-4 rounded" onClick={rediretToProfs}>View All Lectures</button>
-            {!isUser && <button className="hover:bg-red-500 p-4 rounded" onClick={() => window.location.href = '/signin'}>Log In</button>}
+            {!isUser && <button className="hover:bg-red-500 p-4 rounded" onClick={() => window.location.href = '/'}>Log In</button>}
             {isUser && <> <button className="hover:bg-red-500 p-4 rounded" onClick={rediretToProfile}>Profile</button>
                 <button className="hover:bg-red-500 p-4 rounded" onClick={signOut}>Sign Out</button></>}
         </ul>

@@ -26,11 +26,14 @@ export const fetchUserDoc = async (userAuth) => {
         throw new Error('Password is incorrect, please try again')
     }
 
+    const isStudent = studentSnapShot?.exists
+
     if (data?.token) {
+        if (data.token === userAuth.token) {
+            return { data, isStudent }
+        }
         throw new Error('User is already signed in')
     }
-
-    const isStudent = studentSnapShot?.exists
 
     const token = uuidv4();
     window.localStorage.setItem("token", token);
@@ -99,6 +102,20 @@ export const signProfOut = async (uid) => {
         throw new Error('No such student id, contact your supervisors')
     }
     await profRef.set({ token: '' }, { merge: true })
+}
+
+export const getAllProfs = async () => {
+    const profsRef = firestore.collection('users/profs/all');
+    const profsQuerySnapShot = await profsRef.get()
+
+    return profsQuerySnapShot
+}
+
+export const getAllColleges = async () => {
+    const CollegesRef = firestore.collection('colleges');
+    const CollegesQuerySnapShot = await CollegesRef.get()
+
+    return CollegesQuerySnapShot
 }
 
 

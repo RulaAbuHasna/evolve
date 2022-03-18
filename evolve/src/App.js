@@ -5,13 +5,14 @@ import { Student } from './components/Student/Student'
 import { Prof } from './components/Prof/Prof'
 import { HomePage } from './components/Home/Home';
 import { Profs } from './components/Profs/Profs';
+import { Colleges } from './components/Collages/Colleges';
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Switch>
-          <Route exact path="/signin">
+          <Route exact path="/">
             <SignIn />
           </Route>
           <Route exact path="/student/:uid">
@@ -39,13 +40,13 @@ function App() {
             <Profs />
           </Route>
           <Route exac path="/prof/:uid/colleges">
-            all colleges, prof page
+            <Colleges />
           </Route>
           <Route exact path="/student/:uid/colleges">
-            all colleges, student page
+            <Colleges />
           </Route>
           <Route exact path="/colleges">
-            all colleges, not user
+            <Colleges />
           </Route>
         </Switch>
       </Router>

@@ -7,6 +7,7 @@ import { Input, InputLabel } from '@material-ui/core';
 export function SignIn() {
     const [uid, setUid] = useState('');
     const [password, setPassword] = useState('');
+    const token = window.localStorage.getItem("token");
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -15,7 +16,7 @@ export function SignIn() {
             return;
         }
 
-        const userAuth = { uid, password }
+        const userAuth = { uid, password, token }
         fetchUserDoc(userAuth)
             .then((data) => {
                 setUid('');
@@ -49,6 +50,7 @@ export function SignIn() {
                     <button onClick={handleSubmit} className='w-24 h-8 bg-red-500 text-white rounded'>Login</button>
                 </form>
             </div>
+            <button onClick={() => window.location.pathname = '/home'} className='w-24 h-8 bg-red-500 text-white rounded'>Take a peak</button>
         </div>
     );
 }

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Header } from "../Header/Header";
-import { fetchProfDoc, fetchStudentDoc, getAllProfs } from '../../backend/firebase.utils'
+import { fetchProfDoc, fetchStudentDoc, getAllColleges } from '../../backend/firebase.utils'
 import { Footer } from "../Footer/Footer";
 
-export function Profs({ isCurrentUser = false, isStudent = false }) {
+export function Colleges({ isCurrentUser = false, isStudent = false }) {
     const { uid } = useParams()
-    const [profs, setProfs] = useState([])
+    const [colleges, setColleges] = useState([])
     const [isUser, setIsUser] = useState(isCurrentUser)
     const token = window.localStorage.getItem("token");
 
@@ -25,9 +25,9 @@ export function Profs({ isCurrentUser = false, isStudent = false }) {
                     }).catch((err) => alert(err))
         }
 
-        getAllProfs()
+        getAllColleges()
             .then((res) => {
-                setProfs(res?.docs)
+                setColleges(res?.docs)
             })
             .catch((err) => {
                 alert(err)
@@ -37,10 +37,10 @@ export function Profs({ isCurrentUser = false, isStudent = false }) {
 
     return <div>
         <Header isUser={isUser} uid={uid} isStudent={isStudent} />
-        all profs page
-        {profs?.map((prof) => {
-            const profData = prof.data();
-            return <h1 key={profData.id}>{profData.id}</h1>
+        all colleges page
+        {colleges?.map((college) => {
+            const collegeData = college?.data();
+            return <h1 key={collegeData?.id}>{collegeData?.id}</h1>
         })}
         <Footer />
     </div>

@@ -1,11 +1,17 @@
 
 
 export function Sidebar({ isUser = false, isStudent = false, uid }) {
-    const BtnEnums = [
-        { name: 'View lecturers', href: isUser ? isStudent ? `/student/${uid}/profs` : `/prof/${uid}/profs` : '/profs' },
-        { name: 'View colleges', href: '/colleges' },
-        { name: 'My course list', href: '/profile' },
+    const BtnEnums = isUser ? [
+        { name: 'View lecturers', href: isStudent ? `/student/${uid}/profs` : `/prof/${uid}/profs` },
+        { name: 'View colleges', href: isStudent ? `/student/${uid}/colleges` : `/prof/${uid}/colleges` },
+        { name: 'My course list', href: isStudent ? `/student/${uid}` : `/prof/${uid}` },
     ]
+        :
+        [
+            { name: 'View lecturers', href: '/profs' },
+            { name: 'View colleges', href: '/colleges' },
+        ]
+
     return <div className="flex flex-col flex-2 mt-44 w-44 ml-4">
         <div className=" bg-red-500 py-6 rounded text-white font-bold mb-2">Accessability</div>
         <ul className="flex flex-col border-r gap-4">
