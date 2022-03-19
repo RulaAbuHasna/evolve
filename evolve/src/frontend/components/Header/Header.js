@@ -1,4 +1,4 @@
-import { signProfOut, signStudentOut } from '../../backend/firebase.utils'
+import { signProfOut, signStudentOut } from '../../../backend/firebase.utils'
 
 export function Header({ isUser = false, isStudent, uid }) {
     const signOut = async () => {

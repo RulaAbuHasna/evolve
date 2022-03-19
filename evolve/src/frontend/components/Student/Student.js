@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { fetchStudentDoc } from '../../backend/firebase.utils'
+import { fetchStudentDoc } from '../../../backend/firebase.utils'
 import { Footer } from "../Footer/Footer";
 import { Header } from '../Header/Header'
 

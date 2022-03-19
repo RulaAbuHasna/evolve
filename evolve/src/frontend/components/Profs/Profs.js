@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Header } from "../Header/Header";
-import { fetchProfDoc, fetchStudentDoc, getAllProfs } from '../../backend/firebase.utils'
+import { fetchProfDoc, fetchStudentDoc, getAllProfs } from '../../../backend/firebase.utils'
 import { Footer } from "../Footer/Footer";
-import { ProfCard } from "../shared/ProfCard";
+import { ProfCard } from "../../shared/ProfCard";
 import { Input } from "@material-ui/core";
 
 export function Profs({ isCurrentUser = false, isStudent = false }) {
@@ -11,6 +11,8 @@ export function Profs({ isCurrentUser = false, isStudent = false }) {
     const [profs, setProfs] = useState([])
     const [isUser, setIsUser] = useState(isCurrentUser)
     const token = window.localStorage.getItem("token");
+    const [searchedProfs, setSearchedCProfs] = useState([])
+    const [search, setSearch] = useState('')
 
     useEffect(() => {
         if (uid) {
@@ -29,7 +31,21 @@ export function Profs({ isCurrentUser = false, isStudent = false }) {
 
         getAllProfs()
             .then((res) => {
-                setProfs(res?.docs)
+                const docs = res?.docs
+                setProfs(docs)
+                setSearchedCProfs(docs)
+                if (uid) {
+                    const intial = docs?.filter((prof) => {
+                        const profId = prof?.data()?.id
+                        return profId !== uid
+                    })
+                    setProfs(intial)
+                    setSearchedCProfs(intial)
+                    return
+                } else {
+                    setProfs(docs)
+                    setSearchedCProfs(docs)
+                }
             })
             .catch((err) => {
                 alert(err)
@@ -37,14 +53,29 @@ export function Profs({ isCurrentUser = false, isStudent = false }) {
 
     }, [uid, isStudent, token])
 
+    const handleSearch = (e) => {
+        const { value } = e.target
+        setSearch(value)
+
+        if (!value) {
+            setSearchedCProfs(profs)
+            return
+        }
+        const searched = profs.filter((prof) => {
+            const profName = prof?.data()?.name?.toLowerCase();
+            return profName.includes(value)
+        })
+        setSearchedCProfs(searched)
+    }
+
     return <div>
         <Header isUser={isUser} uid={uid} isStudent={isStudent} />
         <div className="flex flex-col items-center mt-16">
             <div className="w-1/5">
-                <Input placeholder="Search" value={''} onChange={(e) => console.log('')} type='text' fullWidth />
+                <Input placeholder="Search" value={search} onChange={handleSearch} type='text' fullWidth />
             </div>
             <div className="mt-6">
-                {profs?.map((prof, idx) => {
+                {searchedProfs?.map((prof, idx) => {
                     const profData = prof?.data();
                     return <ProfCard key={idx} profData={profData} isUser={isUser} uid={uid} isStudent={isStudent} />
                 })}

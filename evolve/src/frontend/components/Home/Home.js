@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Header } from "../Header/Header";
 import { Sidebar } from '../Sidebar/Sidebar'
-import { fetchProfDoc, fetchStudentDoc } from '../../backend/firebase.utils'
+import { fetchProfDoc, fetchStudentDoc } from '../../../backend/firebase.utils'
 import { Footer } from "../Footer/Footer";
 
 export function HomePage({ isCurrentUser = false, isStudent = false }) {
@@ -28,7 +28,7 @@ export function HomePage({ isCurrentUser = false, isStudent = false }) {
                     }).catch((err) => alert(err))
         }
 
-    }, [])
+    }, [isStudent, isUser, token, uid])
 
     return <div>
         <Header isUser={isUser} isStudent={isStudent} uid={uid} />

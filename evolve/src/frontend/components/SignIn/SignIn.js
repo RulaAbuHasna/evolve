@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 //firebase setup
-import { fetchUserDoc } from '../../backend/firebase.utils';
+import { fetchUserDoc } from '../../../backend/firebase.utils';
 import { Input, InputLabel } from '@material-ui/core';
 
 export function SignIn() {

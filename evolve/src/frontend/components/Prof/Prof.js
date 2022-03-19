@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { fetchProfDoc } from '../../backend/firebase.utils'
+import { fetchProfDoc } from '../../../backend/firebase.utils'
 import { Header } from "../Header/Header";
 import { Footer } from "../Footer/Footer";
 
 export function Prof() {
-    const { uid } = useParams();
+    const { uid, profid } = useParams();
     const [data, setData] = useState({})
     const [isUser, setIsUser] = useState(false)
     const token = window.localStorage.getItem("token");

@@ -1,12 +1,12 @@
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { SignIn } from './components/SignIn/SignIn'
-import { Student } from './components/Student/Student'
-import { Prof } from './components/Prof/Prof'
-import { HomePage } from './components/Home/Home';
-import { Profs } from './components/Profs/Profs';
-import { Colleges } from './components/Collages/Colleges';
-import { College } from './components/College/College';
+import { SignIn } from './frontend/components/SignIn/SignIn'
+import { Student } from './frontend/components/Student/Student'
+import { Prof } from './frontend/components/Prof/Prof'
+import { HomePage } from './frontend/components/Home/Home';
+import { Profs } from './frontend/components/Profs/Profs';
+import { Colleges } from './frontend/components/Collages/Colleges';
+import { College } from './frontend/components/College/College';
 
 function App() {
   return (
@@ -57,6 +57,12 @@ function App() {
           </Route>
           <Route exac path="/prof/:uid/colleges">
             <Colleges />
+          </Route>
+          <Route exac path="/prof/:uid/profs/:profid">
+            <Prof />
+          </Route>
+          <Route exac path="/student/:uid/profs/:profid">
+            <Prof />
           </Route>
         </Switch>
       </Router>
