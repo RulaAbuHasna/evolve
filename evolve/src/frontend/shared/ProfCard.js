@@ -6,7 +6,7 @@ export function ProfCard({ profData, isUser, isStudent, uid }) {
             isStudent ?
                 `/student/${uid}/profs/${profId}`
                 : `/prof/${uid}/profs/${profId}`
-            : `/profs/${profId}`
+            : `/prof/${profId}/view`
     }
 
     return <div className="flex justify-between gap-36 my-2 overflow-auto">

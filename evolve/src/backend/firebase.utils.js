@@ -39,11 +39,11 @@ export const fetchUserDoc = async (userAuth) => {
     window.localStorage.setItem("token", token);
     isStudent ? await studentRef.set({ token }, { merge: true }) : await profRef.set({ token }, { merge: true })
 
-    return { data, isStudent };
+    return { data, isStudent, isLoggedIn: data.token === token };
 }
 
 export const fetchProfDoc = async (uid, token) => {
-    if (!uid || !token) throw new Error('WHO THE FUCK ARE YOU, unauthenticated');
+    if (!uid) throw new Error('No id provided');
 
     const profRef = firestore.doc(`users/profs/all/${uid}`);//does this user exist in the DB? 
     const profSnapShot = await profRef.get()
@@ -53,12 +53,12 @@ export const fetchProfDoc = async (uid, token) => {
     }
 
     const data = profSnapShot.data();
-
+    let isLoggedIn = true;
     if (data.token !== token) {
-        throw new Error('WHO THE FUCK ARE YOU, unauthenticated')
+        isLoggedIn = false;
     }
 
-    return data;
+    return { data, isLoggedIn };
 }
 
 export const fetchStudentDoc = async (uid, token) => {
@@ -76,7 +76,12 @@ export const fetchStudentDoc = async (uid, token) => {
         throw new Error('WHO THE FUCK ARE YOU, unauthenticated')
     }
 
-    return data;
+    let isLoggedIn = true;
+    if (data.token !== token) {
+        isLoggedIn = false;
+    }
+
+    return { data, isLoggedIn };
 }
 
 export const signStudentOut = async (uid) => {

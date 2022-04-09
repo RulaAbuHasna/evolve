@@ -58,11 +58,14 @@ function App() {
           <Route exac path="/prof/:uid/colleges">
             <Colleges />
           </Route>
+          <Route exac path="/prof/:profid/view">
+            <Prof />
+          </Route>
           <Route exac path="/prof/:uid/profs/:profid">
             <Prof />
           </Route>
           <Route exac path="/student/:uid/profs/:profid">
-            <Prof />
+            <Prof isStudent={true} />
           </Route>
         </Switch>
       </Router>
