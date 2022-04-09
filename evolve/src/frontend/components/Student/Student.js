@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom"
 import { fetchStudentDoc } from '../../../backend/firebase.utils'
 import { Footer } from "../Footer/Footer";
 import { Header } from '../Header/Header'
+import Profile from "./Profile/Profile";
 
 export function Student() {
     const { uid } = useParams();
@@ -24,7 +25,7 @@ export function Student() {
 
     return <div>
         <Header isUser={isUser} isStudent={true} uid={uid} />
-        this is the student profile page
+        <Profile />
         <Footer />
     </div>
 
