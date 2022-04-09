@@ -4,6 +4,7 @@ import { fetchStudentDoc } from '../../../backend/firebase.utils'
 import { Footer } from "../Footer/Footer";
 import { Header } from '../Header/Header'
 import Profile from "./Profile/Profile";
+import { StudentContext } from "../../shared/Context";
 
 export function Student() {
     const { uid } = useParams();
@@ -23,11 +24,11 @@ export function Student() {
             })
     }, [uid, token])
 
-    return <div>
+    return <StudentContext.Provider value={data}>
         <Header isUser={isUser} isStudent={true} uid={uid} />
         <Profile />
         <Footer />
-    </div>
+    </StudentContext.Provider>
 
 
 }

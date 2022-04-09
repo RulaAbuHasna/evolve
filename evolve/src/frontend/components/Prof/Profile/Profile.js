@@ -1,6 +1,6 @@
 import { Fragment, useState } from "react";
 import { Activities } from "./Activites";
-import { Details } from "./Details";
+import { Details } from "../../../shared/Details";
 import { UpdatePage } from "./Update/Update";
 
 const FragmentEnum = {
