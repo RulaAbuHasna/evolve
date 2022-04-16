@@ -7,6 +7,7 @@ import { HomePage } from './frontend/components/Home/Home';
 import { Profs } from './frontend/components/Profs/Profs';
 import { Colleges } from './frontend/components/Collages/Colleges';
 import { College } from './frontend/components/College/College';
+import CoursePage from './frontend/components/CoursePage/CoursePage';
 
 function App() {
   return (
@@ -55,17 +56,26 @@ function App() {
           <Route exact path="/colleges/:colid">
             <College />
           </Route>
-          <Route exac path="/prof/:uid/colleges">
+          <Route exact path="/prof/:uid/colleges">
             <Colleges />
           </Route>
-          <Route exac path="/prof/:profid/view">
+          <Route exact path="/prof/:profid/view">
             <Prof />
           </Route>
-          <Route exac path="/prof/:uid/profs/:profid">
+          <Route exact path="/prof/:uid/profs/:profid">
             <Prof />
           </Route>
-          <Route exac path="/student/:uid/profs/:profid">
+          <Route exact path="/student/:uid/profs/:profid">
             <Prof isStudent={true} />
+          </Route>
+          <Route exact path="/student/:uid/course/:courseid">
+            <CoursePage isStudent={true} isUser={true} />
+          </Route>
+          <Route exact path="/prof/:uid/course/:courseid">
+            <CoursePage isUser={true} />
+          </Route>
+          <Route exact path="/course/:courseid">
+            <CoursePage />
           </Route>
         </Switch>
       </Router>

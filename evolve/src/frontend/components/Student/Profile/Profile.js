@@ -1,5 +1,5 @@
 import { useState } from "react"
-import CourseList from "./CourseList"
+import CourseList from "../../../shared/CourseList"
 import { Details } from "../../../shared/Details"
 import { useContext } from "react"
 import { StudentContext } from "../../../shared/Context"
@@ -20,7 +20,7 @@ export default function Profile() {
         </div>
         <div>
             <div className="flex border-b-2 border-gray gap-2 mt-12 p-4">
-                <img src='https://upload.wikimedia.org/wikipedia/commons/e/ec/RandomBitmap.png' alt='' width="100px" className="rounded" />
+                <img src='https://upload.wikimedia.org/wikipedia/commons/e/ec/RandomBitmap.png' alt='' width="100px" className="rounded-full" />
                 <div>
                     <h1>{name}</h1>
                     <p>{email}</p>
@@ -28,7 +28,7 @@ export default function Profile() {
             </div>
             <div className="flex items-center mt-12 ml-12 m-auto">
                 {tab === TabEnum.DETAILS && <Details gender={gender} name={name} college={college} />}
-                {tab === TabEnum.COURSE_LIST && <CourseList courses={courses} />}
+                {tab === TabEnum.COURSE_LIST && <CourseList courses={courses} isStudent={true} isCurrentUser={true} />}
             </div>
         </div>
     </div >
