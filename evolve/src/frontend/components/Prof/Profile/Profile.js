@@ -1,17 +1,16 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { Details } from "../../../shared/Details";
 import { UpdatePage } from "./Update/Update";
 import CourseList from "../../../shared/CourseList";
 
 const FragmentEnum = {
     DETAILS: 'details',
-    COURSE_LIST: 'activites',
+    COURSE_LIST: 'course list',
     UPDATE: 'update'
 }
 
 export default function Profile({ data }) {
-    console.log(data)
-    const [fragment, setFragment] = useState(Fragment.DETAILS)
+    const [fragment, setFragment] = useState(FragmentEnum.DETAILS)
 
     return <div className="flex">
         <div className="flex flex-col items-start gap-6 font-bold ml-20 mt-48 border-solid border-r-2 border-gray w-fit pr-5">

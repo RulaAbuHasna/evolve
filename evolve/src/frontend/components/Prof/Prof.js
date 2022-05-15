@@ -4,6 +4,7 @@ import { fetchProfDoc, fetchStudentDoc } from '../../../backend/firebase.utils'
 import { Header } from "../Header/Header";
 import { Footer } from "../Footer/Footer";
 import Profile from './Profile/Profile'
+import ProfPage from "./ProfPage/ProfPage";
 
 export function Prof({ isCurrentUser = false, isStudent }) {
     const { uid, profid } = useParams();
@@ -35,11 +36,11 @@ export function Prof({ isCurrentUser = false, isStudent }) {
                 })
 
     }, [uid, token, profid, isStudent])
-    //CHECK IF THE USER IS PROF && === PERSONAL ACOUNT 
 
     return <div>
         <Header isUser={isUser} uid={uid} isStudent={isStudent} />
         {!profid && <Profile data={data} />}
+        {profid && <ProfPage curProfData={data} isStudent={isStudent} />}
         <Footer />
     </div>
 }

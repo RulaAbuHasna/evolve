@@ -61,6 +61,21 @@ export const fetchProfDoc = async (uid, token) => {
     return { data, isLoggedIn };
 }
 
+
+export const fetchProfDetails = async (uid) => {
+    if (!uid) throw new Error('No id provided');
+
+    const profRef = firestore.doc(`users/profs/all/${uid}`);//does this user exist in the DB? 
+    const profSnapShot = await profRef.get()
+
+    if (!profSnapShot.exists) {
+        throw new Error('No such prof id, contact your supervisors')
+    }
+
+    const data = profSnapShot.data();
+    return data;
+}
+
 export const fetchStudentDoc = async (uid, token) => {
     if (!uid || !token) throw new Error('WHO THE FUCK ARE YOU, unauthenticated');
 
@@ -117,18 +132,26 @@ export const getAllProfs = async () => {
 }
 
 export const getAllColleges = async () => {
-    const CollegesRef = firestore.collection('colleges');
-    const CollegesQuerySnapShot = await CollegesRef.get()
+    const collegesRef = firestore.collection('colleges');
+    const collegesQuerySnapShot = await collegesRef.get()
 
-    return CollegesQuerySnapShot
+    return collegesQuerySnapShot
 }
 
 export const getCollegeProfs = async (uid) => {
     if (!uid) throw Error('No id provided')
-    const ProfsRef = firestore.collection(`colleges/${uid}/profs`);
-    const ProfsQuerySnapShot = await ProfsRef.get()
+    const profsRef = firestore.collection(`colleges/${uid}/profs`);
+    const profsQuerySnapShot = await profsRef.get()
 
-    return ProfsQuerySnapShot
+    return profsQuerySnapShot
+}
+
+export const getCourseData = async (courseid) => {
+    if (!courseid) throw Error('No id provided')
+    const courseRef = firestore.doc(`courses/${courseid}`);
+    const courseSnapShot = await courseRef.get()
+
+    return courseSnapShot.data()
 }
 
 firebase.initializeApp(firebaseConfig);
