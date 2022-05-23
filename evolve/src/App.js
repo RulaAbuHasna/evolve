@@ -7,6 +7,7 @@ import { HomePage } from './frontend/components/Home/Home';
 import { Profs } from './frontend/components/Profs/Profs';
 import { Colleges } from './frontend/components/Collages/Colleges';
 import { College } from './frontend/components/College/College';
+import Rate from './frontend/components/Rate/Rate';
 import CoursePage from './frontend/components/CoursePage/CoursePage';
 
 function App() {
@@ -76,6 +77,9 @@ function App() {
           </Route>
           <Route exact path="/course/:courseid">
             <CoursePage />
+          </Route>
+          <Route exact path="/student/:uid/course/:courseid/rate">
+            <Rate isStudent={true} isUser={true} />
           </Route>
         </Switch>
       </Router>

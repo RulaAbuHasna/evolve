@@ -27,12 +27,13 @@ export const fetchUserDoc = async (userAuth) => {
     }
 
     const isStudent = studentSnapShot?.exists
-
     if (data?.token) {
         if (data.token === userAuth.token) {
             return { data, isStudent }
         }
-        throw new Error('User is already signed in')
+        await studentRef.set({ token: '' }, { merge: true })
+        isStudent ? await studentRef.set({ token: '' }, { merge: true }) : await profRef.set({ token: "" }, { merge: true })
+        throw new Error('User seems to be already signed in, if you try again, it will sign you off from other places!')
     }
 
     const token = uuidv4();
@@ -77,7 +78,7 @@ export const fetchProfDetails = async (uid) => {
 }
 
 export const fetchStudentDoc = async (uid, token) => {
-    if (!uid || !token) throw new Error('WHO THE FUCK ARE YOU, unauthenticated');
+    if (!uid || !token) throw new Error('WHO THE ARE YOU, unauthenticated');
 
     const studentRef = firestore.doc(`users/students/all/${uid}`);//does this user exist in the DB? 
     const studentSnapShot = await studentRef.get()
@@ -88,7 +89,7 @@ export const fetchStudentDoc = async (uid, token) => {
 
     const data = studentSnapShot.data();
     if (data.token !== token) {
-        throw new Error('WHO THE FUCK ARE YOU, unauthenticated')
+        throw new Error('WHO THE ARE YOU, unauthenticated')
     }
 
     let isLoggedIn = true;
@@ -100,7 +101,7 @@ export const fetchStudentDoc = async (uid, token) => {
 }
 
 export const signStudentOut = async (uid) => {
-    if (!uid) throw new Error('WHO THE FUCK ARE YOU, unauthenticated');
+    if (!uid) throw new Error('WHO THE ARE YOU, unauthenticated');
 
     const studentRef = firestore.doc(`users/students/all/${uid}`);//does this user exist in the DB? 
     const studentSnapShot = await studentRef.get()
@@ -108,12 +109,12 @@ export const signStudentOut = async (uid) => {
     if (!studentSnapShot.exists) {
         throw new Error('No such student id, contact your supervisors')
     }
-
+    window.localStorage.removeItem("token", "");
     await studentRef.set({ token: '' }, { merge: true })
 }
 
 export const signProfOut = async (uid) => {
-    if (!uid) throw new Error('WHO THE FUCK ARE YOU, unauthenticated');
+    if (!uid) throw new Error('WHO THE ARE YOU, unauthenticated');
 
     const profRef = firestore.doc(`users/profs/all/${uid}`);//does this user exist in the DB? 
     const profSnapShot = await profRef.get()
@@ -121,6 +122,7 @@ export const signProfOut = async (uid) => {
     if (!profSnapShot.exists) {
         throw new Error('No such student id, contact your supervisors')
     }
+    window.localStorage.removeItem("token", "");
     await profRef.set({ token: '' }, { merge: true })
 }
 
