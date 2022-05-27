@@ -156,6 +156,15 @@ export const getCourseData = async (courseid) => {
     return courseSnapShot.data()
 }
 
+export const updateCourseData = async (courseid, data) => {
+    if (!courseid) throw Error('No id provided')
+    const courseRef = firestore.doc(`courses/${courseid}`);
+    await courseRef.set({ ...data }, { merge: true })
+
+    const courseSnapShot = await courseRef.get()
+    return courseSnapShot.data()
+}
+
 firebase.initializeApp(firebaseConfig);
 
 export const auth = firebase.auth();

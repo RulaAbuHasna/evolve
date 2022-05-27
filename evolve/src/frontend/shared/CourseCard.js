@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom"
 
 export default function CourseCard({ course, isStudent, isCurrentUser }) {
     const { uid } = useParams()
-    console.log(isStudent, '==')
 
     const handleViewCourse = () => {
         const { id } = course
