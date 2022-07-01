@@ -11,19 +11,56 @@ const UpdateEnum = {
 
 export function UpdatePage() {
     const [updateStatus, setUpdateSatuts] = useState('')
+    const [hideCourse, setHideCourse] = useState(false)
+    const [hidePlan, setHidePlan] = useState(false)
+    const [hideActivity, setHideActivity] = useState(false)
+
+    const hideTab = (name) => {
+       switch(name){
+        case UpdateEnum.COURSE:
+           setHideCourse(true)
+           setHidePlan(false)
+           setHideActivity(false)
+           break;
+        case UpdateEnum.ACTIVITY:
+           setHideCourse(false)
+           setHidePlan(false)
+           setHideActivity(true)
+           break;
+        case UpdateEnum.PLAN:
+           setHideCourse(false)
+           setHidePlan(true)
+           setHideActivity(false)
+           break;
+        default:
+            console.log('how did dat happen')
+       }
+    }
 
     return <div>
-        <div>
-            <button className='w-24 h-8 bg-red-500 text-white rounded' onClick={setUpdateSatuts('Course')}>Update Course List</button>
-            <button className='w-24 h-8 bg-red-500 text-white rounded' onClick={setUpdateSatuts('Plan')} > Update Lecturer Plan</button>
-            <button className='w-24 h-8 bg-red-500 text-white rounded' onClick={setUpdateSatuts('Activity')} > Update Lecturer Avtivity</button>
+        <div className="flex flex-col gap-4">
+            {!hideCourse && <button className='bg-red-500 text-white rounded p-4'
+                onClick={() => {
+                    setUpdateSatuts('Course')
+                    hideTab('Course')
+                }} >Update Course List
+            </button>}
+            {!hidePlan && <button className='bg-red-500 text-white rounded p-4'
+                onClick={() => {
+                    setUpdateSatuts('Plan')
+                    hideTab('Plan')
+                }} > Update Lecturer Plan</button>}
+            {!hideActivity && <button className='bg-red-500 text-white rounded p-4' onClick={() => {
+                setUpdateSatuts('Activity')
+                hideTab('Activity')
+            }}> Update Lecturer Avtivity</button>}
         </div >
         <div>
             {updateStatus === UpdateEnum.COURSE && <>
-                <UpdateCourseList />
+              <UpdateCourseList />
             </>}
             {updateStatus === UpdateEnum.PLAN && <>
-                <UpdatePlan />
+               <UpdatePlan />
             </>}
             {updateStatus === UpdateEnum.ACTIVITY && <>
                 <UpdateActivites />
