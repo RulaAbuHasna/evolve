@@ -175,6 +175,20 @@ export const addNewActivity = async ({profid, newActivity}) => {
     await profsRef.set({ activity}, { merge: true })
 }
 
+export const updateCourseList = async ({profid, newCourse, courseId}) => {
+    if (!profid) throw Error('No id provided')
+    const profCourseRef = firestore.doc(`users/profs/all/${profid}`);
+    const profCourseSnapShot = await profCourseRef.get()
+
+    const oldCourses = profCourseSnapShot?.data()?.courses || []
+    const courses = [...oldCourses, newCourse]
+
+    const courseRef = firestore.doc(`courses/${courseId}`);
+    await courseRef.set({id:courseId, name:newCourse.name, profid})
+
+    await profCourseRef.set({ courses}, { merge: true })
+}
+
 firebase.initializeApp(firebaseConfig);
 
 export const auth = firebase.auth();
