@@ -21,6 +21,6 @@ export function UpdateActivites() {
         <button className="bg-green-400 text-white p-4 rounded-full mr-4  w-2/5" onClick={onSubmit}>Add new activity</button>
         </div>
        }
-       {label && <h1 className="text-lg mt-4 border rounded-full p-4">{label} <span onClick={()=>setLabel('')} className="text-red-400 curspor-pointer">Click Me</span> if you want to submit more!</h1>}
+       {label && <h1 className="text-lg mt-4 border rounded-full p-4">{label} <span onClick={()=>setLabel('')} className="text-red-400 cursor-pointer">Click Me</span> if you want to submit more!</h1>}
     </div>
 }

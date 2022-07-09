@@ -175,6 +175,15 @@ export const addNewActivity = async ({profid, newActivity}) => {
     await profsRef.set({ activity}, { merge: true })
 }
 
+export const addNewPlan = async ({profid, newPlan}) => {
+    if (!profid) throw Error('No id provided')
+    const profsRef = firestore.doc(`users/profs/all/${profid}`);
+    const profSnapShot = await profsRef.get()
+    const oldPlan = profSnapShot?.data()?.plan || []
+    const plan = [...oldPlan, newPlan]
+    await profsRef.set({ plan}, { merge: true })
+}
+
 export const updateCourseList = async ({profid, newCourse, courseId}) => {
     if (!profid) throw Error('No id provided')
     const profCourseRef = firestore.doc(`users/profs/all/${profid}`);
