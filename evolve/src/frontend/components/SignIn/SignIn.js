@@ -35,7 +35,7 @@ export function SignIn() {
             </div >
             <div className='flex flex-1 justify-center items-center'>
                 <form className='flex flex-col place-items-center gap-7 border border-gray-600 rounded p-32'>
-                    <div className=''>
+                    <div>
                         <InputLabel>
                             ID
                         </InputLabel>
