@@ -40,7 +40,7 @@ export function Prof({ isCurrentUser = false, isStudent }) {
     return <div>
         <Header isUser={isUser} uid={uid} isStudent={isStudent} />
         {!profid && <Profile data={data} />}
-        {profid && <ProfPage curProfData={data} isStudent={isStudent} />}
+        {profid && <ProfPage isUser={isUser} curProfData={data} isStudent={isStudent} />}
         <Footer />
     </div>
 }
