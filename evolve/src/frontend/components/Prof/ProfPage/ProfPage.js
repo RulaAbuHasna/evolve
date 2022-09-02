@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Details } from "../../../shared/Details";
 import CourseList from "../../../shared/CourseList";
 import { useParams } from "react-router-dom";
@@ -11,14 +11,14 @@ const FragmentEnum = {
     OPINIONS: 'opinions and rate'
 }
 
-export default function ProfPage({ curProfData, isStudent }) {
+export default function ProfPage({isStudent, isUser }) {
     const { profid } = useParams()
     const [fragment, setFragment] = useState(FragmentEnum.DETAILS)
     const [profData, setProfData] = useState()
 
     useEffect(() => {
         fetchProfDetails(profid).then((data) => setProfData(data))
-    }, [])
+    }, [profid])
 
     return <div className="flex">
         <div className="flex flex-col items-start gap-6 font-bold ml-20 mt-48 border-solid border-r-2 border-gray w-fit pr-5">
@@ -31,10 +31,10 @@ export default function ProfPage({ curProfData, isStudent }) {
                 <Details name={profData?.name} college={profData?.college} gender={profData?.gender} />
             }
             {fragment === FragmentEnum.COURSE_LIST &&
-                <CourseList courses={profData?.courses} isCurrentUser={true} isStudent={isStudent} />
+                <CourseList courses={profData?.courses} isCurrentUser={isUser} isStudent={isStudent} />
             }
             {fragment === FragmentEnum.PREV_LIST &&
-                <CourseList courses={profData?.courses} isCurrentUser={true} sStudent={isStudent} />
+                <CourseList courses={profData?.courses} isCurrentUser={isUser} sStudent={isStudent} />
             }
         </div>
     </div>
