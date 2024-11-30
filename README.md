@@ -1,7 +1,7 @@
 # Evolve: School Project
 
 # Context 
-Feeedback system that aims to develop the educational system of azhar university to enhance the communication process between the professors of the collage and thier students, a platform that allows profs to update their plans and share their courses to be viewed and given feedback and rates upon a well studied critiria, where the results of the project will be collected to be used towards a more functional collage experiance.
+A feedback system aimed at improving the educational system at Al-Azhar University to enhance communication between professors and students. This platform allows professors to update their plans, share their courses for viewing, and receive feedback and ratings based on well-defined criteria. The results of the project will be collected and used to create a more functional college experience.
 
 # Tools 
 Web based applicaton: 
